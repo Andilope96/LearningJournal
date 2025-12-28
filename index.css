@@ -90,7 +90,7 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
 }
 
 .site-main{
-  padding:  0 2.5rem;
+  padding:  0 2.5rem 1.25rem;
 }
 
 /* Views (Home/About/Post) */
