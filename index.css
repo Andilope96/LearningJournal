@@ -162,6 +162,21 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
 }
 .hero-readmore:hover{ opacity:.95; }
 
+/* Full-width hero (break out of .container) */
+.hero--fullbleed{
+  width: 100vw;
+  margin-left: calc(50% - 50vw); /* bricht aus dem Container aus */
+  border-radius: 0;             /* kein "Card"-Look */
+  box-shadow: none;             /* kein "Card"-Look */
+}
+
+/* Content weiterhin schön im Lesebereich halten */
+.hero--fullbleed .hero-content{
+  width: min(var(--max), 100% - 2rem);
+  margin: 0 auto;
+}
+
+
 /* POSTS GRID (Home) */
 .section-title{
   text-align:center;
