@@ -90,7 +90,7 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
 }
 
 .site-main{
-  padding: 1.25rem 0 2.5rem;
+  padding:  0 2.5rem;
 }
 
 /* Views (Home/About/Post) */
@@ -263,7 +263,8 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
 
 /* ABOUT */
 .about-top{
-  display:grid;
+  margin-top: 1.25em;
+    display:grid;
   grid-template-columns: 1fr;
   gap: 1rem;
   align-items:start;
@@ -287,8 +288,8 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
 }
 
 .about-social{
-    display: flex;
-    justify-content: start;
+    display: inline-block;
+    padding-top: 0.5em;
     
 }
 .about-social a{
@@ -436,6 +437,12 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
   .about-sections{
     grid-template-columns: repeat(2, 1fr);
   }
+  .about-social{
+    display: flex;
+    justify-content: start;
+    padding-top: 0;
+    
+}
 }
 
 @media (prefers-reduced-motion: reduce){
