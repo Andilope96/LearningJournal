@@ -272,7 +272,7 @@ function renderPostCards(targetGridEl, postsToShow) {
         </div>
 
         <div class="post-actions">
-          <a class="post-readmore" href="#post/${encodeURIComponent(p.id)}">Read more</a>
+          <a class="post-readmore" href="#post/${encodeURIComponent(p.id)}">Read more →</a>
         </div>
       </article>
     `;
