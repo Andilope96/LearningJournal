@@ -295,11 +295,16 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
 .about-social a{
   font-weight: 800;
   text-decoration: none;
-  text-underline-offset: 4px;
+  
   margin-top: 1em;
   margin-bottom: 0.5em;
   margin-left: 1em;
   font-size: 0.85rem;
+}
+
+.about-social a:hover{
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 .about-sections{
   margin-top: 1.5rem;
