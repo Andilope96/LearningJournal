@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A learning journal documenting my full-stack journey." />
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+  <title>My learning journal</title>
+  <link rel="stylesheet" href="index.css" />
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="Go to Home">
+        <span class="brand-mark" aria-hidden="true">
+          <img
+            src="images/logo.svg"
+            alt=""
+            width="28"
+            height="28"
+          />
+        </span>
+        <span class="brand-text">My learning journal</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="#home" data-nav="home">Home</a></li>
+          <li><a class="nav-link" href="#about" data-nav="about">About me</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="site-main">
+    <!-- HOME VIEW -->
+    <section id="view-home" class="view container" aria-labelledby="home-title">
+      <!-- Featured / Hero -->
+      <section class="hero" aria-labelledby="home-title">
+        <div class="hero-media" aria-hidden="true">
+          <img id="hero-img" src="" alt="" />
+          <div class="hero-overlay"></div>
+        </div>
+
+        <div class="hero-content">
+          <p id="hero-date" class="hero-date"></p>
+          <h1 id="home-title" class="hero-title"></h1>
+          <p id="hero-excerpt" class="hero-excerpt"></p>
+
+          <a id="hero-readmore" class="hero-readmore" href="#post/day-10-advanced-css-oldagram">
+            Read more
+          </a>
+        </div>
+      </section>
+
+      <!-- Posts grid -->
+      <section class="posts" aria-labelledby="posts-title">
+        <h2 id="posts-title" class="section-title">Recent posts</h2>
+
+        <div id="posts-grid" class="posts-grid" role="list"></div>
+
+        <div class="center">
+          <button id="view-more-btn" class="btn" type="button" aria-expanded="false">
+            View More
+          </button>
+        </div>
+      </section>
+    </section>
+
+    <!-- ABOUT VIEW (static header + recent posts like Home) -->
+    <section id="view-about" class="view container" hidden aria-labelledby="about-title">
+      <header class="about-header">
+        <div class="about-top">
+  <div class="about-side">
+    <img
+      class="about-avatar"
+      src="images/Andreas.png"
+      alt="Portrait photo of Andreas"
+      width="140"
+      height="140"
+    />
+
+    <div class="about-social" aria-label="Social links">
+      <a
+        href="https://www.linkedin.com/in/andreas-k%C3%BChltau-10678a233/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Connect with me on LinkedIn"
+        class="icon-link"
+      >
+        <i class="fa-brands fa-linkedin"></i> LinkedIn
+      </a>
+    </div>
+    <div class="about-social" aria-label="Social links">
+      <a
+        href="https://github.com/Andilope96"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="View my GitHub projects"
+        class="icon-link"
+      >
+        <i class="fa-brands fa-github"></i> GitHub
+      </a>
+    </div>
+  </div>
+
+          <div class="about-intro">
+            <h1 id="about-title" class="about-title">
+              Welcome to my Learning Journal — I’m Andreas.
+            </h1>
+
+            <p class="about-lede">
+              I work as an IT consultant and build apps and automations with Microsoft Power Platform. In parallel, I’m systematically developing full-stack skills. This journal is my public learning log: what I’m studying, what I’m building, and the lessons I’m collecting as I go.
+            </p>
+
+            <p class="about-lede">
+            My goal is to become capable of building complete, reliable applications — structured, maintainable, and production-ready. And to help others with my journey to become a fullstack developer through my journal.
+            </p>
+
+            <p class="about-lede">
+            If you want to see my work, you can find my projects and code on GitHub. For networking, feedback, or collaboration, feel free to connect with me on LinkedIn.
+            </p>
+
+          </div>
+        </div>
+      </header>
+
+      <!-- RECENT POSTS on ABOUT (same style as Home) -->
+      <section class="posts" aria-labelledby="about-posts-title">
+        <h2 id="about-posts-title" class="section-title">Recent posts</h2>
+
+        <div id="about-posts-grid" class="posts-grid" role="list"></div>
+
+        <div class="center">
+          <button id="about-view-more-btn" class="btn" type="button" aria-expanded="false">
+            View More
+          </button>
+        </div>
+      </section>
+    </section>
+
+    <!-- POST VIEW (renders full markdown from data.js) -->
+    <section id="view-post" class="view container" hidden aria-labelledby="post-title">
+      <div class="post-topbar">
+        <a class="post-back" href="#home">← Back to Home</a>
+      </div>
+
+      <article class="post-page">
+        <p id="post-date" class="post-page-date"></p>
+        <h1 id="post-title" class="post-page-title"></h1>
+        <p id="post-excerpt" class="post-page-excerpt"></p>
+        <div class="post-hero">
+          <img id="post-hero-img" src="" alt="" />
+        </div>
+
+
+        <div id="post-content" class="post-markdown" tabindex="-1"></div>
+
+        <div id="post-links" class="post-links" hidden>
+          <h2 class="post-links-title">Links</h2>
+          <ul id="post-links-list" class="post-links-list"></ul>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-title">My Learning Journal powered by Andreas Kühltau</p>
+      <p class="footer-copy">Copyright ©2025</p>
+    </div>
+  </footer>
+
+  <script type="module" src="index.js"></script>
+</body>
+</html>
