@@ -82,7 +82,9 @@ function markdownToHtml(markdown) {
         code = lines.slice(1).join("\n");
       }
 
-      out.push(`<pre><code>${escapeHtml(code).replaceAll("\t", "  ")}</code></pre>`);
+      out.push(
+        `<pre><code>${escapeHtml(code).replaceAll("\t", "  ")}</code></pre>`
+      );
       continue;
     }
 
@@ -181,8 +183,12 @@ const allPosts = (posts || []).map((p, idx) => ({
   excerpt: p.excerpt || "",
   image: p.image || null,
   markdown: p.markdown || "",
-  links: Array.isArray(p.links) ? p.links : []
+  links: Array.isArray(p.links) ? p.links : [],
 }));
+
+const NEW_COUNT = 3;
+const NEW_POST_IDS = new Set(allPosts.slice(0, NEW_COUNT).map((p) => p.id));
+const isNewPost = (post) => NEW_POST_IDS.has(post.id);
 
 function getPostById(id) {
   return allPosts.find((p) => p.id === id) || null;
@@ -217,6 +223,13 @@ const postLinksList = $("#post-links-list");
 
 const navLinks = document.querySelectorAll("[data-nav]");
 
+const topSlider = $("#top-slider");
+const topSliderTrack = $("#top-slider-track");
+const topSliderDots = $("#top-slider-dots");
+
+const heroDots = $("#hero-dots");
+const heroEl = document.querySelector(".hero");
+
 /* -------------------------
    Rendering
 ------------------------- */
@@ -241,8 +254,10 @@ function showOnly(which) {
 }
 
 function renderHero(post) {
-  heroDate.textContent = post.date;
-  heroTitle.textContent = post.title;
+  heroDate.innerHTML = `${escapeHtml(post.date)}${
+    isNewPost(post) ? ' <span class="badge badge--new">NEW!</span>' : ""
+  }`;
+  heroTitle.text = `${escapeHtml(post.title)}`;
   heroExcerpt.textContent = post.excerpt;
   heroReadMore.setAttribute("href", `#post/${encodeURIComponent(post.id)}`);
 
@@ -256,33 +271,53 @@ function renderHero(post) {
 }
 
 function renderPostCards(targetGridEl, postsToShow) {
-  const html = postsToShow.map((p) => {
-    const hasImg = Boolean(p.image?.src);
+  const html = postsToShow
+    .map((p) => {
+      const hasImg = Boolean(p.image?.src);
 
-    return `
+      return `
       <article class="post-card" role="listitem">
         <div class="post-thumb" aria-hidden="true">
-          ${hasImg ? `<img src="${escapeHtml(p.image.src)}" alt="${escapeHtml(p.image.alt || "")}">` : ""}
+          ${
+            hasImg
+              ? `<img src="${escapeHtml(p.image.src)}" alt="${escapeHtml(
+                  p.image.alt || ""
+                )}">`
+              : ""
+          }
         </div>
 
         <div class="post-body">
-          <p class="post-date">${escapeHtml(p.date)}</p>
+          <p class="post-date">${escapeHtml(p.date)}${
+        isNewPost(p) ? ' <span class="badge badge--new">NEW!</span>' : ""
+      }</p>
           <h3 class="post-title">${escapeHtml(p.title)}</h3>
           <p class="post-excerpt">${escapeHtml(p.excerpt)}</p>
         </div>
 
         <div class="post-actions">
-          <a class="post-readmore" href="#post/${encodeURIComponent(p.id)}">Read more →</a>
+          <a class="post-readmore" href="#post/${encodeURIComponent(
+            p.id
+          )}">Read more →</a>
         </div>
       </article>
     `;
-  }).join("");
+    })
+    .join("");
 
   targetGridEl.innerHTML = html;
 }
 
-function renderGridSection({ gridEl, buttonEl, expanded, initialCount, postsList }) {
-  const count = expanded ? postsList.length : Math.min(initialCount, postsList.length);
+function renderGridSection({
+  gridEl,
+  buttonEl,
+  expanded,
+  initialCount,
+  postsList,
+}) {
+  const count = expanded
+    ? postsList.length
+    : Math.min(initialCount, postsList.length);
   renderPostCards(gridEl, postsList.slice(0, count));
 
   const hasMore = postsList.length > count;
@@ -293,16 +328,19 @@ function renderGridSection({ gridEl, buttonEl, expanded, initialCount, postsList
 }
 
 function renderHome() {
-  const featured = allPosts[0] || null;
-  if (featured) renderHero(featured);
+  // Hero: die 3 neuesten Posts als Slider
+  const slides = allPosts.slice(0, HERO_SLIDE_COUNT);
+  initHeroSlider(slides);
 
-  const list = allPosts.slice(1); // grid without featured
+  // Grid: ohne diese 3
+  const list = allPosts.slice(HERO_SLIDE_COUNT);
+
   renderGridSection({
     gridEl: postsGrid,
     buttonEl: viewMoreBtn,
     expanded: homeExpanded,
     initialCount: HOME_INITIAL_COUNT,
-    postsList: list
+    postsList: list,
   });
 }
 
@@ -313,7 +351,7 @@ function renderAbout() {
     buttonEl: aboutViewMoreBtn,
     expanded: aboutExpanded,
     initialCount: ABOUT_INITIAL_COUNT,
-    postsList: allPosts
+    postsList: allPosts,
   });
 }
 
@@ -332,7 +370,9 @@ function renderPostPage(post) {
     postHeroImg.hidden = true;
   }*/
 
-  postContent.innerHTML = post.markdown ? markdownToHtml(post.markdown) : "<p>No content yet.</p>";
+  postContent.innerHTML = post.markdown
+    ? markdownToHtml(post.markdown)
+    : "<p>No content yet.</p>";
 
   const safeLinks = (post.links || [])
     .map((l) => ({
@@ -343,7 +383,14 @@ function renderPostPage(post) {
 
   if (safeLinks.length) {
     postLinksList.innerHTML = safeLinks
-      .map((l) => `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)}</a></li>`)
+      .map(
+        (l) =>
+          `<li><a href="${
+            l.url
+          }" target="_blank" rel="noopener noreferrer">${escapeHtml(
+            l.label
+          )}</a></li>`
+      )
       .join("");
     postLinksWrap.hidden = false;
   } else {
@@ -352,6 +399,107 @@ function renderPostPage(post) {
   }
 
   postContent.focus();
+}
+/* -------------------------
+   Hero Slider (Home)
+------------------------- */
+const HERO_SLIDE_COUNT = 3;
+const HERO_INTERVAL_MS = 4500;
+
+let heroSlides = [];
+let heroIndex = 0;
+let heroTimer = null;
+let heroBound = false;
+
+const reduceMotion = window.matchMedia?.(
+  "(prefers-reduced-motion: reduce)"
+)?.matches;
+
+function stopHeroSlider() {
+  if (heroTimer) {
+    clearInterval(heroTimer);
+    heroTimer = null;
+  }
+}
+
+function updateHeroDots() {
+  if (!heroDots) return;
+  const dots = heroDots.querySelectorAll(".hero-dot");
+  dots.forEach((d, i) =>
+    d.setAttribute("aria-current", String(i === heroIndex))
+  );
+}
+
+function setHeroSlide(i) {
+  if (!heroSlides.length) return;
+  heroIndex = (i + heroSlides.length) % heroSlides.length;
+  renderHero(heroSlides[heroIndex]);
+  updateHeroDots();
+}
+
+function startHeroSlider() {
+  stopHeroSlider();
+  if (reduceMotion) return;
+  if (heroSlides.length < 2) return;
+
+  heroTimer = setInterval(() => {
+    setHeroSlide(heroIndex + 1);
+  }, HERO_INTERVAL_MS);
+}
+
+function bindHeroEventsOnce() {
+  if (!heroEl || heroBound) return;
+  heroBound = true;
+
+  // Pause on hover / focus
+  heroEl.addEventListener("mouseenter", stopHeroSlider);
+  heroEl.addEventListener("mouseleave", startHeroSlider);
+  heroEl.addEventListener("focusin", stopHeroSlider);
+  heroEl.addEventListener("focusout", startHeroSlider);
+
+  // Dot click
+  heroDots?.addEventListener("click", (e) => {
+    const btn = e.target.closest?.("button[data-hero-slide]");
+    if (!btn) return;
+    const i = Number(btn.getAttribute("data-hero-slide"));
+    if (Number.isNaN(i)) return;
+
+    setHeroSlide(i);
+    startHeroSlider();
+  });
+}
+
+function initHeroSlider(slides) {
+  heroSlides = slides.slice(0, HERO_SLIDE_COUNT);
+
+  if (!heroSlides.length) {
+    stopHeroSlider();
+    if (heroDots) heroDots.innerHTML = "";
+    return;
+  }
+
+  // Index absichern (falls weniger Posts vorhanden)
+  heroIndex = Math.min(heroIndex, heroSlides.length - 1);
+
+  // Dots rendern
+  if (heroDots) {
+    if (heroSlides.length < 2) {
+      heroDots.innerHTML = "";
+    } else {
+      heroDots.innerHTML = heroSlides
+        .map(
+          (_p, i) =>
+            `<button class="hero-dot" type="button" data-hero-slide="${i}" aria-current="${String(
+              i === heroIndex
+            )}"></button>`
+        )
+        .join("");
+    }
+  }
+
+  bindHeroEventsOnce();
+  setHeroSlide(heroIndex);
+  startHeroSlider();
 }
 
 /* -------------------------
@@ -371,6 +519,7 @@ function parseRoute() {
 
 function route() {
   const r = parseRoute();
+  if (r.page !== "home") stopHeroSlider();
 
   if (r.page === "about") {
     setActiveNav("about");

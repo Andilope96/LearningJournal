@@ -48,13 +48,16 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
 .skip-link:focus{ left:1rem; top:1rem; }
 
 .site-header{
-  background:#fff;
-  border-bottom:1px solid var(--border);
+  /*background: linear-gradient(to right, #355c7d, #6c5b7b, #c06c84);*/
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  /*background:#fff;*/
+  border-bottom:0px solid var(--border);
   position:sticky;
   top:0;
   z-index:10;
 }
 .header-inner{
+  color: #fff;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -89,6 +92,12 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
   padding:.35rem .4rem;
   border-radius:10px;
 }
+
+.nav-link:hover{
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .nav-link[aria-current="page"]{
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -111,6 +120,7 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
   margin-bottom: 1.35rem;
   background:#111;
   min-height: 320px;
+  font-size: 1.25rem;
 }
 
 .hero:hover{
@@ -138,12 +148,13 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
   padding: 1.25rem;
   color:#fff;
   max-width: 70ch;
+  font-size: 1.5rem;
 }
 .hero-date{
   margin:0 0 .35rem 0;
   text-transform:uppercase;
   letter-spacing:1px;
-  font-size:.85rem;
+  font-size: 1rem;
   opacity:.92;
 }
 .hero-title{
@@ -164,6 +175,7 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
   padding:.65rem 1rem;
   font-weight:800;
   text-decoration:none;
+  font-size: 1rem;
 }
 .hero-readmore:hover{ opacity:.95; }
 
@@ -222,7 +234,7 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
   object-fit:cover;
 }
 .post-body{
-  padding: 2em;
+  padding: 1.5em;
 }
 .post-date{
   margin:0;
@@ -427,7 +439,9 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
 
 /* FOOTER */
 .site-footer{
-  background: var(--footer);
+  /*background: linear-gradient(to right, #355c7d, #6c5b7b, #c06c84);*/
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  /*background:#fff;*/
   color:#fff;
   padding: 2rem 0;
 }
@@ -459,3 +473,114 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
 @media (prefers-reduced-motion: reduce){
   *{ scroll-behavior: auto !important; }
 }
+
+/* -------------------------
+   TOP SLIDER (Home)
+------------------------- */
+.top-slider{
+  margin: 1rem 0 1.25rem;
+}
+
+.top-slider__wrap{
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #fff;
+  position: relative;
+}
+
+.top-slider__track{
+  display: flex;
+  transition: transform 600ms ease;
+  will-change: transform;
+}
+
+.top-slide{
+  min-width: 100%;
+}
+
+/* damit es wie eine "volle" Slide wirkt */
+.top-slide .post-card{
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.top-slider__dots{
+  position: absolute;
+  right: .75rem;
+  bottom: .75rem;
+  display: flex;
+  gap: .4rem;
+}
+
+.top-slider__dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.25);
+  background: rgba(0,0,0,.18);
+}
+
+.top-slider__dot[aria-current="true"]{
+  background: rgba(0,0,0,.65);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .top-slider__track{ transition: none !important; }
+}
+
+/* Hero slider dots */
+.hero{ position: relative; } /* ist bei dir schon so, nur zur Klarheit */
+
+.hero-dots{
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  display: flex;
+  gap: .5rem;
+  z-index: 2; /* über Overlay */
+}
+
+.hero-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.6);
+  background: rgba(255,255,255,.25);
+  cursor: pointer;
+  padding: 0;
+}
+
+.hero-dot[aria-current="true"]{
+  background: rgba(255,255,255,.95);
+}
+
+/* NEW badge */
+.badge{
+  display: none;
+  padding: .18rem .55rem;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: .6px;
+  font-size: .75em;
+  line-height: 1;
+  vertical-align: middle;
+  transform: translateY(-2px);
+}
+
+/* Default (Cards) */
+.badge--new{
+  background: #111;
+  color: #fff;
+  border: 1px solid rgba(0,0,0,.15);
+}
+
+/* In der Hero-Section invertiert (weil Text weiß ist) */
+.hero .badge--new{
+  display: inline-block;
+  background: rgba(255,255,255,.5);
+  color: #111;
+  border: 0px solid rgba(255,255,255,.5);
+}
+
+
