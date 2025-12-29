@@ -10,7 +10,7 @@
   --footer:#1f1f1f;
 }
 
-*{ box-sizing: border-box; }
+*{ box-sizing: border-box;}
 
 html,body{ height:100%; }
 
@@ -20,7 +20,9 @@ body{
   line-height:1.5;
   color:var(--text);
   background:var(--bg);
-  background: linear-gradient(#fff, #e6e6e6);
+  background: linear-gradient(to right, #fff, #e6e6e6);  
+  background-repeat: no-repeat;
+  height: 100vh;
   text-shadow: 0 0 0.5px #111;
 }
 
@@ -67,7 +69,10 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
   text-decoration:none;
   font-weight:700;
 }
-.brand-text{ letter-spacing:.2px; }
+.brand-text{
+   letter-spacing:.2px;
+    text-transform: uppercase;
+  }
 .nav-list{
   list-style:none;
   display:flex;
@@ -217,7 +222,7 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
   object-fit:cover;
 }
 .post-body{
-  padding: 1rem;
+  padding: 2em;
 }
 .post-date{
   margin:0;
@@ -427,7 +432,7 @@ a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:3px;
   padding: 2rem 0;
 }
 .footer-inner{ text-align:center; }
-.footer-title{ margin:0; font-weight:800; }
+.footer-title{ margin:0; font-weight:800; text-transform: capitalize;}
 .footer-copy{ margin:.25rem 0 0; opacity:.85; }
 
 /* Responsive */
