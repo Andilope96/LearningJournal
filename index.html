@@ -156,13 +156,18 @@
       </div>
 
       <article class="post-page">
-        <p id="post-date" class="post-page-date"></p>
-        <h1 id="post-title" class="post-page-title"></h1>
-        <p id="post-excerpt" class="post-page-excerpt"></p>
-        <div class="post-hero">
-          <img id="post-hero-img" src="" alt="" />
-        </div>
+        <header class="post-hero post-hero--fullbleed" aria-labelledby="post-title">
+          <div class="post-hero-media" aria-hidden="true">
+            <img id="post-hero-img" src="" alt="" />
+            <div class="post-hero-overlay"></div>
+          </div>
 
+          <div class="post-hero-content">
+            <p id="post-date" class="post-hero-date"></p>
+            <h1 id="post-title" class="post-hero-title"></h1>
+            <p id="post-excerpt" class="post-hero-excerpt"></p>
+          </div>
+        </header>
 
         <div id="post-content" class="post-markdown" tabindex="-1"></div>
 
@@ -171,6 +176,7 @@
           <ul id="post-links-list" class="post-links-list"></ul>
         </div>
       </article>
+
     </section>
   </main>
 

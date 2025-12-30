@@ -255,9 +255,9 @@ function showOnly(which) {
 
 function renderHero(post) {
   heroDate.innerHTML = `${escapeHtml(post.date)}${
-    isNewPost(post) ? ' <span class="badge badge--new">NEW!</span>' : ""
+    isNewPost(post) ? ' <span class="badge badge--new">NEW</span>' : ""
   }`;
-  heroTitle.text = `${escapeHtml(post.title)}`;
+  heroTitle.textContent = `${escapeHtml(post.title)}`;
   heroExcerpt.textContent = post.excerpt;
   heroReadMore.setAttribute("href", `#post/${encodeURIComponent(post.id)}`);
 
@@ -360,7 +360,7 @@ function renderPostPage(post) {
   postTitle.textContent = post.title;
   postExcerpt.textContent = post.excerpt;
 
-  /*if (post.image?.src) {
+  if (post.image?.src) {
     postHeroImg.src = post.image.src;
     postHeroImg.alt = post.image.alt || "";
     postHeroImg.hidden = false;
@@ -368,7 +368,7 @@ function renderPostPage(post) {
     postHeroImg.removeAttribute("src");
     postHeroImg.alt = "";
     postHeroImg.hidden = true;
-  }*/
+  }
 
   postContent.innerHTML = post.markdown
     ? markdownToHtml(post.markdown)
